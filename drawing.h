@@ -44,7 +44,8 @@ public:
     void setDrawingImage(Image img);
 
     void setPreviousTransform(QTransform t);
-    void setTransformType(TT tt);
+    void setTransform(QTransform t);
+    int setTransformType(int t);
     void setValues(double x, double y, double z);
     void apply();
 

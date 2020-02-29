@@ -18,14 +18,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     drawing.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    transformgrid.cpp
 
 HEADERS += \
     drawing.h \
-    mainwindow.h
+    mainwindow.h \
+    transformgrid.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    transformgrid.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

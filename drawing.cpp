@@ -37,22 +37,25 @@ QTransform Drawing::transform(TT tt, QTransform prev, qreal x, qreal y, qreal z)
 void Drawing::drawPrimaries(QPainter *painter)
 {
     // Draw axes.
-    painter->setPen(Qt::red);
+    painter->setPen(Qt::blue);
+    painter->setBrush(QBrush(QColor(0,0,255,32)));
 
-    QPainterPath axes(QPointF(0,0));
-    axes.lineTo(50, 0); axes.lineTo(48, -2);
-    axes.lineTo(48, 2); axes.lineTo(50,0);
-    axes.addText(QPointF(56,0),QFont("Arial",12,2),"X");
+    QPainterPath xAxis;
+    xAxis.lineTo(46, 0); xAxis.lineTo(44, -4); xAxis.lineTo(50,0);
+    xAxis.lineTo(44, 4); xAxis.lineTo(46,0);
 
-    axes.lineTo(0, 0); axes.lineTo(0, 50);
-    axes.lineTo(-2, 48); axes.lineTo(0, 50);
-    axes.lineTo(2, 48); axes.lineTo(0, 50);
-    axes.addText(QPointF(56,0),QFont("Arial",12,2),"Y");
+    QPainterPath yAxis;
+    yAxis.lineTo(0,46); yAxis.lineTo(-4,44); yAxis.lineTo(0,50);
+    yAxis.lineTo(4,44); yAxis.lineTo(0,46);
 
-    painter->drawPath(axes);
+    QPainterPath xLabel; xLabel.addText(QPointF(56,6),QFont("Arial",11,3),"X");
+    QPainterPath yLabel; yLabel.addText(QPointF(-6,70),QFont("Arial",11,3),"Y");
+
+    painter->drawPath(xAxis); painter->drawPath(yAxis);
+    painter->drawPath(xLabel); painter->drawPath(yLabel);
 
     // Draw transform origin point.
-    painter->drawEllipse(ORIGIN,12,12);
+    painter->drawEllipse(ORIGIN,11,11);
 }
 
 Drawing::Drawing()
@@ -66,6 +69,7 @@ Drawing::Drawing()
     typedef Drawing D;
     TT_FUNC = { {TT::SetOrigin, &D::setOrigin}, {TT::Translate, &D::translate}, {TT::Scale, &D::scale},
           {TT::Shear, &D::shear}, {TT::Project, &D::project} };
+    setDrawingImage(Image::Circle);
 }
 
 Drawing::~Drawing()
@@ -77,22 +81,36 @@ void Drawing::setDrawingImage(Image img)
     switch (img) {
     // Circle case
     case Image::Circle:
-        path.addEllipse(QPointF(0,0),100,100); return;
+        path.addEllipse(QPointF(0,0),100,100); break;
     // Square case
     case Image::Square:
-        path.addRect(-50,-50,100,100); return;
+        path.addRect(-50,-50,100,100); break;
     // Letter A case
     case Image::LetterA:
         path.addText(QPointF(-50,-50),QFont("Arial",100),"A");
-        return;
+        break;
     }
+    PATH = path;
 }
 
 void Drawing::setPreviousTransform(QTransform t)
 { PREV_TRANSFORM = t; }
 
-void Drawing::setTransformType(TT tt)
-{ TRANSFORM_TYPE = tt; }
+void Drawing::setTransform(QTransform t)
+{ TRANSFORM = t; }
+
+//! Returns the amount input parameters
+int Drawing::setTransformType(int tt)
+{
+    TRANSFORM_TYPE = static_cast<TT>(tt);
+    switch (TRANSFORM_TYPE) {
+    case TT::SetOrigin: return 2;
+    case TT::Translate: return 2;
+    case TT::Scale: return 2;
+    case TT::Shear: return 2;
+    case TT::Project: return  3;
+    }
+}
 
 void Drawing::setValues(double x, double y, double z)
 { X = x; Y = y; Z = z; }
@@ -106,5 +124,7 @@ QRectF Drawing::boundingRect() const
 void Drawing::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     drawPrimaries(painter);
+    painter->setPen(Qt::red);
+    painter->setBrush(QBrush(QColor(255,0,0,32)));
     painter->drawPath(TRANSFORM.map(PATH));
 }
