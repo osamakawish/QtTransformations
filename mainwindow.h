@@ -25,6 +25,7 @@ public:
     ~MainWindow();
 
 private:
+    void setDrawingImage(int i);
     void setTransformType(int i);
 
     Ui::MainWindow *ui;

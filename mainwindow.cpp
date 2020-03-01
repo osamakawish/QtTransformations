@@ -6,6 +6,8 @@
 void MainWindow::setupConnections()
 {
     // Change transform type based on combo box.
+    connect(ui->shapeComboBox,static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this,&MainWindow::setDrawingImage);
     connect(ui->transformComboBox,static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this,&MainWindow::setTransformType);
     connect(ui->applyButton,&QPushButton::clicked,
@@ -42,6 +44,12 @@ MainWindow::~MainWindow()
     delete PREVIEW;
 
     delete ui;
+}
+
+void MainWindow::setDrawingImage(int i)
+{
+    PREVIEW->setDrawingImage(i); MAIN_DRAWING->setDrawingImage(i);
+    PREVIEW->apply(); MAIN_DRAWING->apply();
 }
 
 void MainWindow::setTransformType(int i)

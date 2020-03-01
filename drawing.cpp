@@ -69,26 +69,22 @@ Drawing::Drawing()
     typedef Drawing D;
     TT_FUNC = { {TT::SetOrigin, &D::setOrigin}, {TT::Translate, &D::translate}, {TT::Scale, &D::scale},
           {TT::Shear, &D::shear}, {TT::Project, &D::project} };
-    setDrawingImage(Image::Circle);
+    setDrawingImage(0);
 }
 
 Drawing::~Drawing()
 {}
 
-void Drawing::setDrawingImage(Image img)
+void Drawing::setDrawingImage(int i)
 {
     QPainterPath path;
-    switch (img) {
-    // Circle case
+    switch (static_cast<Image>(i)) {
     case Image::Circle:
         path.addEllipse(QPointF(0,0),100,100); break;
-    // Square case
     case Image::Square:
         path.addRect(-50,-50,100,100); break;
-    // Letter A case
     case Image::LetterA:
-        path.addText(QPointF(-50,-50),QFont("Arial",100),"A");
-        break;
+        path.addText(QPointF(-56,50),QFont("Arial",100),"A"); break;
     }
     PATH = path;
 }

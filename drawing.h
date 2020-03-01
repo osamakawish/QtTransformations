@@ -41,7 +41,7 @@ public:
     ~Drawing();
 
     enum class Image {Circle, Square, LetterA};
-    void setDrawingImage(Image img);
+    void setDrawingImage(int i);
 
     void setPreviousTransform(QTransform t);
     void setTransform(QTransform t);
