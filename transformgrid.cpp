@@ -29,6 +29,7 @@ TransformGrid::TransformGrid(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TransformGrid)
 {
+    TRANSFORM = QTransform();
     ui->setupUi(this);
 }
 

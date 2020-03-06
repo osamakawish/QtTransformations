@@ -2,8 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QVector>
 
 class Drawing;
+class QPointF;
+class QGraphicsScene;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,17 +19,23 @@ class MainWindow : public QMainWindow
     void setupConnections();
     void setupVariables();
 
-    // Private Variables
-    Drawing *MAIN_DRAWING;
-    Drawing *PREVIEW;
+    QVector<Drawing *> drawings;
+    QGraphicsScene *scene;
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
+    void apply(bool clicked);
     void setDrawingImage(int i);
     void setTransformType(int i);
+
+    void setX(qreal x);
+    void setY(qreal y);
+    void setZ(qreal z);
+
+    void setInputs(qreal x, qreal y, qreal z);
 
     Ui::MainWindow *ui;
 };

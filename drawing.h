@@ -1,56 +1,66 @@
 #ifndef DRAWING_H
 #define DRAWING_H
 
-#include <QMap>
+#include <array>
 #include <QGraphicsItem>
 
 // Transformation Type
-enum class TT {SetOrigin, Translate, Scale, Shear, Project};
+enum class TransformationType {SetOrigin, Translate, Scale, Shear, Project};
 
 class Drawing;
 // Preliminary Changes
-typedef void (Drawing::*Transformation)(QTransform &transform, double x, double y, double z);
+typedef void (Drawing::*Transformation)(double x, double y, double z);
 typedef QPainterPath (*Path)();
 
+using std::array;
+
 class Drawing : public QGraphicsItem
-{
+{    
     // Transformation Functions
-    void setOrigin(QTransform &transform, double x, double y, double);
-    void translate(QTransform &transform, double x, double y, double);
-    void scale(QTransform &transform, double x, double y, double);
-    void shear(QTransform &transform, double x, double y, double);
-    void project(QTransform &transform, double x, double y, double z);
+    void setOrigin(double x, double y, double);
+    void translate(double x, double y, double);
+    void scale(double x, double y, double);
+    void shear(double x, double y, double);
+    void project(double x, double y, double z);
 
     // Auxiliary Member Functions
-    Transformation getTransformation(TT tt);
-    QTransform transform(TT tt, QTransform prev, qreal x, qreal y, qreal z);
-    void drawPrimaries(QPainter *painter);
+    Transformation getTransformation(TransformationType tt);
+    void setupAxes();
+    void constructor(int image, QTransform prev=QTransform());
+
+    void updateVariables();
 
     // Variables
+    array<QPainterPath,4> PRIMARIES;
     QPointF ORIGIN;
     QPainterPath PATH;
-    TT TRANSFORM_TYPE;
     double X, Y, Z;
     Transformation TRANSFORM_FUNC;
-    QTransform PREV_TRANSFORM;
-    QTransform TRANSFORM;
-    QMap<TT,Transformation> TT_FUNC;
+    QTransform PREVIOUS, TRANSFORM, FINAL;
 
 public:
+    enum class Image {Circle, Square, LetterA};
     Drawing();
+    Drawing(int image, QTransform prev);
     ~Drawing();
 
-    enum class Image {Circle, Square, LetterA};
+    // Draw image based on enum input.
+    void setDrawingImage(Image img);
     void setDrawingImage(int i);
 
-    void setPreviousTransform(QTransform t);
-    void setTransform(QTransform t);
+    // Prepare the changes to be applied.
     int setTransformType(int t);
+    void setPreviousTransform(QTransform t);
     void setValues(double x, double y, double z);
-    void apply();
 
+    // Details on the bounding rectangle and the image.
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
+
+    // Getters
+    QTransform previousTransform();
+    QTransform currentTransform();
+    QTransform finalTransform();
 };
 
 #endif // DRAWING_H

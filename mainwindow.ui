@@ -14,29 +14,63 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout" rowstretch="0,4,0,0,0,0,0,1,0" columnstretch="0,1,0,0,1">
-    <item row="5" column="1">
-     <widget class="QPushButton" name="applyButton">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="0,6,0,0,0,0,0,1">
+    <item row="0" column="0">
+     <widget class="QLabel" name="finalLabel">
       <property name="text">
-       <string>Apply</string>
+       <string>Final</string>
       </property>
      </widget>
     </item>
-    <item row="6" column="1">
-     <widget class="QLabel" name="matrixLabel">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
+    <item row="0" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="shapeLabel">
+        <property name="text">
+         <string>Shape</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="shapeComboBox">
+        <item>
+         <property name="text">
+          <string>Circle</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Square</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Letter A</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="transformListLabel">
       <property name="text">
-       <string>Final Matrix</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+       <string>List of Transformations Applied</string>
       </property>
      </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLabel" name="transformationLabel">
+      <property name="text">
+       <string>Transformation</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" rowspan="5">
+     <widget class="QListView" name="listView"/>
     </item>
     <item row="3" column="1">
      <widget class="QComboBox" name="transformComboBox">
@@ -67,142 +101,121 @@
       </item>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="transformListLabel">
-      <property name="text">
-       <string>List of Transformations Applied</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0" rowspan="5">
-     <widget class="QListView" name="listView"/>
-    </item>
-    <item row="1" column="0" colspan="5">
-     <widget class="QGraphicsView" name="graphicsViewFinal">
-      <property name="dragMode">
-       <enum>QGraphicsView::ScrollHandDrag</enum>
-      </property>
-      <property name="viewportUpdateMode">
-       <enum>QGraphicsView::FullViewportUpdate</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="2" colspan="3">
-     <widget class="QLabel" name="previewLabel">
-      <property name="text">
-       <string>Preview</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="3">
-     <widget class="QLabel" name="finalLabel">
-      <property name="text">
-       <string>Final</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="4">
-     <widget class="QComboBox" name="shapeComboBox">
-      <item>
-       <property name="text">
-        <string>Circle</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Square</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Letter A</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Transformation</string>
-      </property>
-     </widget>
-    </item>
     <item row="4" column="1">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QDoubleSpinBox" name="xSpinBox"/>
+       <widget class="QDoubleSpinBox" name="xSpinBox">
+        <property name="minimum">
+         <double>-99.000000000000000</double>
+        </property>
+       </widget>
       </item>
       <item>
-       <widget class="QDoubleSpinBox" name="ySpinBox"/>
+       <widget class="QDoubleSpinBox" name="ySpinBox">
+        <property name="minimum">
+         <double>-99.000000000000000</double>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QDoubleSpinBox" name="zSpinBox">
         <property name="enabled">
          <bool>false</bool>
         </property>
+        <property name="minimum">
+         <double>-99.000000000000000</double>
+        </property>
        </widget>
       </item>
      </layout>
     </item>
-    <item row="0" column="3">
-     <widget class="QLabel" name="shapeLabel">
+    <item row="5" column="1">
+     <widget class="QPushButton" name="applyButton">
       <property name="text">
-       <string>Shape</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       <string>Apply</string>
       </property>
      </widget>
+    </item>
+    <item row="6" column="1">
+     <layout class="QHBoxLayout" name="matrixLabelLayout">
+      <item>
+       <widget class="QLabel" name="beforeLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Before</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="applyingLabel">
+        <property name="text">
+         <string>Applying</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="afterLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>After</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item row="7" column="1">
      <layout class="QHBoxLayout" name="matrixLayout">
       <item>
-       <spacer name="matrixLeftSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
+       <widget class="TransformGrid" name="beforeGrid" native="true"/>
       </item>
       <item>
-       <widget class="TransformGrid" name="transformGrid" native="true"/>
+       <widget class="Line" name="line1">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
       </item>
       <item>
-       <spacer name="matrixRightSpacer">
+       <widget class="TransformGrid" name="currentGrid" native="true"/>
+      </item>
+      <item>
+       <widget class="Line" name="line2">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Vertical</enum>
         </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
+       </widget>
+      </item>
+      <item>
+       <widget class="TransformGrid" name="afterGrid" native="true"/>
       </item>
      </layout>
     </item>
-    <item row="3" column="2" rowspan="5" colspan="3">
-     <widget class="QGraphicsView" name="graphicsViewPreview">
-      <property name="sizeAdjustPolicy">
-       <enum>QAbstractScrollArea::AdjustToContents</enum>
-      </property>
+    <item row="1" column="0" colspan="2">
+     <widget class="QGraphicsView" name="graphicsViewFinal">
       <property name="dragMode">
        <enum>QGraphicsView::ScrollHandDrag</enum>
       </property>
       <property name="viewportUpdateMode">
-       <enum>QGraphicsView::FullViewportUpdate</enum>
+       <enum>QGraphicsView::NoViewportUpdate</enum>
       </property>
      </widget>
     </item>
