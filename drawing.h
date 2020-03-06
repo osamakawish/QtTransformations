@@ -32,7 +32,7 @@ class Drawing : public QGraphicsItem
 
     // Variables
     array<QPainterPath,4> PRIMARIES;
-    QPointF ORIGIN;
+    QPointF PRIMARY_ORIGIN, ORIGIN;
     QPainterPath PATH;
     double X, Y, Z;
     Transformation TRANSFORM_FUNC;

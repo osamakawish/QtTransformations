@@ -5,19 +5,19 @@
 #include <typeinfo>
 
 void Drawing::setOrigin(double x, double y, double)
-{ORIGIN = QPointF(x,y);}
+{TRANSFORM = QTransform(); FINAL = PREVIOUS; ORIGIN = QPointF(x,y);}
 
 void Drawing::translate(double x, double y, double)
-{TRANSFORM = QTransform().translate(x,y); FINAL = PREVIOUS * TRANSFORM;}
+{ORIGIN = PRIMARY_ORIGIN; TRANSFORM = QTransform().translate(x,y); FINAL = PREVIOUS * TRANSFORM;}
 
 void Drawing::scale(double x, double y, double)
-{TRANSFORM = QTransform().scale(x,y); FINAL = PREVIOUS * TRANSFORM;}
+{ORIGIN = PRIMARY_ORIGIN; TRANSFORM = QTransform().scale(x,y); FINAL = PREVIOUS * TRANSFORM;}
 
 void Drawing::shear(double x, double y, double)
-{TRANSFORM = QTransform().shear(x,y); FINAL = PREVIOUS * TRANSFORM;}
+{ORIGIN = PRIMARY_ORIGIN; TRANSFORM = QTransform().shear(x,y); FINAL = PREVIOUS * TRANSFORM;}
 
 void Drawing::project(double x, double y, double z)
-{TRANSFORM = QTransform(1,0,x, 0,1,y, 0,0,z); FINAL = PREVIOUS * TRANSFORM;}
+{ORIGIN = PRIMARY_ORIGIN; TRANSFORM = QTransform(1,0,x, 0,1,y, 0,0,z); FINAL = PREVIOUS * TRANSFORM;}
 
 Transformation Drawing::getTransformation(TransformationType type)
 {
