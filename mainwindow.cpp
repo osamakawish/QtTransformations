@@ -121,6 +121,9 @@ void MainWindow::setInputs(qreal x, qreal y, qreal z)
     ui->currentGrid->setTransform(current->currentTransform());
     ui->afterGrid->setTransform(current->finalTransform());
 
+    QPointF o = current->origin();
+    ui->finalOriginLabel->setText("(" + QString::number(o.x()) + ", " + QString::number(o.y()) + ")");
+
     scene->update();
 }
 
