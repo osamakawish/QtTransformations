@@ -39,6 +39,7 @@ private:
     void setZ(qreal z);
 
     void setInputs(qreal x, qreal y, qreal z);
+    void debug();
 
     Ui::MainWindow *ui;
 };

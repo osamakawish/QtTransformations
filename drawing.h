@@ -17,7 +17,7 @@ using std::array;
 class Drawing : public QGraphicsItem
 {    
     // Transformation Functions
-    void setOrigin(double x, double y, double);
+    void moveOrigin(double x, double y, double);
     void translate(double x, double y, double);
     void scale(double x, double y, double);
     void shear(double x, double y, double);
@@ -26,7 +26,7 @@ class Drawing : public QGraphicsItem
     // Auxiliary Member Functions
     Transformation getTransformation(TransformationType tt);
     void setupAxes();
-    void constructor(int image, QTransform prev=QTransform());
+    void constructor(int image, QTransform prev=QTransform(), QPointF origin=QPointF());
 
     void updateVariables();
 
@@ -41,7 +41,7 @@ class Drawing : public QGraphicsItem
 public:
     enum class Image {Circle, Square, LetterA};
     Drawing();
-    Drawing(int image, QTransform prev);
+    Drawing(int image, QTransform prev, QPointF origin=QPointF());
     ~Drawing();
 
     // Draw image based on enum input.
@@ -58,6 +58,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) override;
 
     // Getters
+    QPointF origin();
     QTransform previousTransform();
     QTransform currentTransform();
     QTransform finalTransform();

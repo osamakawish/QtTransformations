@@ -6,22 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>746</width>
-    <height>681</height>
+    <width>624</width>
+    <height>682</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout" rowstretch="0,6,0,0,0,0,0,1" columnstretch="3,2">
-    <item row="0" column="0">
-     <widget class="QLabel" name="finalLabel">
-      <property name="text">
-       <string>Final</string>
-      </property>
-     </widget>
-    </item>
+   <layout class="QGridLayout" name="gridLayout" rowstretch="0,6,0,0,0,0,0,0,0,0" columnstretch="3,2">
     <item row="0" column="1">
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
@@ -55,145 +48,17 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="transformListLabel">
-      <property name="text">
-       <string>List of Transformations Applied</string>
+    <item row="1" column="0" colspan="2">
+     <widget class="QGraphicsView" name="graphicsViewFinal">
+      <property name="dragMode">
+       <enum>QGraphicsView::ScrollHandDrag</enum>
+      </property>
+      <property name="viewportUpdateMode">
+       <enum>QGraphicsView::NoViewportUpdate</enum>
       </property>
      </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLabel" name="transformationLabel">
-      <property name="text">
-       <string>Transformation</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0" rowspan="5">
-     <widget class="QListView" name="listView"/>
-    </item>
-    <item row="3" column="1">
-     <widget class="QComboBox" name="transformComboBox">
-      <item>
-       <property name="text">
-        <string>Set Origin</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Translate</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Scale</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Shear</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Project</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="4" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QDoubleSpinBox" name="xSpinBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="decimals">
-         <number>3</number>
-        </property>
-        <property name="minimum">
-         <double>-999.999000000000024</double>
-        </property>
-        <property name="maximum">
-         <double>999.999000000000024</double>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDoubleSpinBox" name="ySpinBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="decimals">
-         <number>3</number>
-        </property>
-        <property name="minimum">
-         <double>-999.999000000000024</double>
-        </property>
-        <property name="maximum">
-         <double>999.999000000000024</double>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDoubleSpinBox" name="zSpinBox">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="decimals">
-         <number>3</number>
-        </property>
-        <property name="minimum">
-         <double>-999.999000000000024</double>
-        </property>
-        <property name="maximum">
-         <double>999.999000000000024</double>
-        </property>
-        <property name="singleStep">
-         <double>0.100000000000000</double>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </item>
     <item row="5" column="1">
-     <widget class="QPushButton" name="applyButton">
-      <property name="text">
-       <string>Apply</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="1">
      <layout class="QHBoxLayout" name="matrixLabelLayout">
       <item>
        <widget class="QLabel" name="beforeLabel">
@@ -239,7 +104,14 @@
       </item>
      </layout>
     </item>
-    <item row="7" column="1">
+    <item row="0" column="0">
+     <widget class="QLabel" name="finalLabel">
+      <property name="text">
+       <string>Final</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1" rowspan="3">
      <layout class="QHBoxLayout" name="matrixLayout" stretch="1,0,1,0,1">
       <item>
        <widget class="TransformGrid" name="beforeGrid" native="true"/>
@@ -266,13 +138,140 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QGraphicsView" name="graphicsViewFinal">
-      <property name="dragMode">
-       <enum>QGraphicsView::ScrollHandDrag</enum>
+    <item row="7" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QDoubleSpinBox" name="xSpinBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-999.999000000000024</double>
+        </property>
+        <property name="maximum">
+         <double>999.999000000000024</double>
+        </property>
+        <property name="singleStep">
+         <double>10.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="ySpinBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-999.999000000000024</double>
+        </property>
+        <property name="maximum">
+         <double>999.999000000000024</double>
+        </property>
+        <property name="singleStep">
+         <double>10.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="zSpinBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-999.999000000000024</double>
+        </property>
+        <property name="maximum">
+         <double>999.999000000000024</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="transformationLabel">
+      <property name="text">
+       <string>Transformation</string>
       </property>
-      <property name="viewportUpdateMode">
-       <enum>QGraphicsView::NoViewportUpdate</enum>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QComboBox" name="transformComboBox">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>Move Origin</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Translate</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Scale</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Shear</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Project</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="9" column="0" colspan="2">
+     <widget class="QPushButton" name="applyButton">
+      <property name="text">
+       <string>Apply</string>
       </property>
      </widget>
     </item>
@@ -283,7 +282,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>746</width>
+     <width>624</width>
      <height>26</height>
     </rect>
    </property>

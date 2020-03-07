@@ -4,8 +4,8 @@
 #include <QDebug>
 #include <typeinfo>
 
-void Drawing::setOrigin(double x, double y, double)
-{TRANSFORM = QTransform(); FINAL = PREVIOUS; ORIGIN = QPointF(x,y);}
+void Drawing::moveOrigin(double x, double y, double)
+{TRANSFORM = QTransform(); FINAL = PREVIOUS; ORIGIN = PRIMARY_ORIGIN + QPointF(x,y);}
 
 void Drawing::translate(double x, double y, double)
 {ORIGIN = PRIMARY_ORIGIN; TRANSFORM = QTransform().translate(x,y); FINAL = PREVIOUS * TRANSFORM;}
@@ -22,7 +22,7 @@ void Drawing::project(double x, double y, double z)
 Transformation Drawing::getTransformation(TransformationType type)
 {
     switch(type) {
-    case TransformationType::SetOrigin: return &Drawing::setOrigin;
+    case TransformationType::SetOrigin: return &Drawing::moveOrigin;
     case TransformationType::Translate: return &Drawing::translate;
     case TransformationType::Scale: return &Drawing::scale;
     case TransformationType::Shear: return &Drawing::shear;
@@ -43,11 +43,12 @@ void Drawing::setupAxes()
     PRIMARIES[3].addText(QPointF(-6,70),QFont("Arial",11,3),"Y");
 }
 
-void Drawing::constructor(int image, QTransform prev)
+void Drawing::constructor(int image, QTransform prev, QPointF origin)
 {
     setDrawingImage(image);
     X = 0; Y = 0; Z = 0;
     TRANSFORM_FUNC = &Drawing::translate;
+    PRIMARY_ORIGIN = origin;
     PREVIOUS = prev;
     FINAL = prev;
     setupAxes();
@@ -59,8 +60,8 @@ void Drawing::updateVariables()
 Drawing::Drawing()
 { constructor(0); }
 
-Drawing::Drawing(int image, QTransform prev)
-{ constructor(image,prev); }
+Drawing::Drawing(int image, QTransform prev, QPointF origin)
+{ constructor(image,prev,origin); }
 
 Drawing::~Drawing()
 {}
@@ -122,6 +123,9 @@ void Drawing::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget
     painter->setBrush(QBrush(QColor(255,0,0,32)));
     painter->drawPath(FINAL.map(PATH));
 }
+
+QPointF Drawing::origin()
+{ return ORIGIN; }
 
 QTransform Drawing::previousTransform() { return PREVIOUS; }
 QTransform Drawing::currentTransform() { return TRANSFORM; }

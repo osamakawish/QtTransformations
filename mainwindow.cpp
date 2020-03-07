@@ -61,8 +61,10 @@ MainWindow::~MainWindow()
 void MainWindow::apply(bool)
 {
     // Create new drawing with appropriate previous transform and shape.
-    drawings.append(new Drawing(ui->shapeComboBox->currentIndex(),drawings.last()->finalTransform()));
-    scene->addItem(drawings.last());
+    Drawing *dwg = drawings.last();
+    dwg = new Drawing(ui->shapeComboBox->currentIndex(),dwg->finalTransform(),dwg->origin());
+    drawings.append(dwg);
+    scene->addItem(dwg);
     scene->update();
 
     ui->beforeGrid->setTransform(ui->afterGrid->transform());
@@ -120,5 +122,14 @@ void MainWindow::setInputs(qreal x, qreal y, qreal z)
     ui->afterGrid->setTransform(current->finalTransform());
 
     scene->update();
+}
+
+void MainWindow::debug()
+{
+    auto it = drawings.begin();
+    while (it != drawings.end()) {
+        qDebug() << *it << (*it)->origin() << (*it)->transform(); it++;
+    }
+    qDebug() << endl;
 }
 
