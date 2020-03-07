@@ -33,6 +33,19 @@ void MainWindow::setupVariables()
     scene->addItem(drawings[0]);
 }
 
+void MainWindow::setStep(qreal diff)
+{
+    ui->xSpinBox->setSingleStep(diff);
+    ui->ySpinBox->setSingleStep(diff);
+}
+
+void MainWindow::setMax(qreal max)
+{
+    QDoubleSpinBox *x = ui->xSpinBox, *y = ui->ySpinBox;
+
+    x->setRange(-max,max); y->setRange(-max,max);
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 , ui(new Ui::MainWindow)
@@ -45,19 +58,17 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 { delete ui; }
 
-void MainWindow::apply(bool clicked)
+void MainWindow::apply(bool)
 {
-    if (clicked)
-    {
-        ui->beforeGrid->setTransform(ui->afterGrid->transform());
-        ui->transformComboBox->setCurrentIndex(1);
-        ui->currentGrid->setTransform(QTransform());
+    // Create new drawing with appropriate previous transform and shape.
+    drawings.append(new Drawing(ui->shapeComboBox->currentIndex(),drawings.last()->finalTransform()));
+    scene->addItem(drawings.last());
+    scene->update();
 
-        // Create new drawing with appropriate previous transform and shape.
-        drawings.append(new Drawing(ui->shapeComboBox->currentIndex(),drawings.last()->finalTransform()));
-        scene->addItem(drawings.last());
-        scene->update();
-    }
+    ui->beforeGrid->setTransform(ui->afterGrid->transform());
+    ui->transformComboBox->setCurrentIndex(1);
+    ui->xSpinBox->setValue(0); ui->ySpinBox->setValue(0);
+    ui->currentGrid->setTransform(QTransform());
 }
 
 void MainWindow::setDrawingImage(int i)
@@ -70,7 +81,24 @@ void MainWindow::setDrawingImage(int i)
 void MainWindow::setTransformType(int i)
 {
     int p = drawings.last()->setTransformType(i);
-    ui->ySpinBox->setDisabled(p < 2); ui->zSpinBox->setDisabled(p < 3);
+
+    QDoubleSpinBox *x = ui->xSpinBox, *y = ui->ySpinBox, *z = ui->zSpinBox;
+
+    y->setDisabled(p < 2); z->setDisabled(p < 3);
+
+    QTransform id;
+
+    switch (i) {
+    case 1: x->setValue(id.dx()); y->setValue(id.dy()); break;
+    case 2: x->setValue(id.m11()); y->setValue(id.m22()); break;
+    case 3: x->setValue(id.m21()); y->setValue(id.m12()); break;
+    case 4: x->setValue(id.m13()); y->setValue(id.m23()); z->setValue(id.m33()); break;
+    }
+
+    if (i < 2) { setStep(10); setMax(999.999); }
+    else if (i < 4) { setStep(0.1); setMax(9.99); }
+    else { setStep(0.001); setMax(0.99); }
+
     scene->update();
 }
 

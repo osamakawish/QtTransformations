@@ -22,6 +22,9 @@ class MainWindow : public QMainWindow
     QVector<Drawing *> drawings;
     QGraphicsScene *scene;
 
+    void setStep(qreal diff);
+    void setMax(qreal max);
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
